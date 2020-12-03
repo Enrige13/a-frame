@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Bubble Chart</title>
+
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://rawgit.com/Ctrl-Alt-Zen/aframe-mobile-controls/master/components/twoway-motion/twoway-motion.js"></script>
+    <script src="https://unpkg.com/aframe-charts-component/dist/aframe-charts-component.min.js"></script>
+    
+</head>
+<body>
+    <!-- Aframe scene -->
+    <a-scene background="color: grey">
+        <!-- Aframe light -->
+        <a-light type="point" intensity="1" position="-2 10 10"></a-light>
+
+        <!-- Declaring chart component -->
+        <a-entity charts="type: bubble; dataPoints: ../data/dataPositive.json; show_legend_info: true; show_legend_position: 5 15 0; rotate: 0 45 0; show_popup_info: true;"></a-entity>
+
+        <!--Assets für den Hintergrund-->
+        <a-assets>
+            <img id="pink" src="https://img.gs/bbdkhfbzkk/stretch/http://i.imgur.com/1hyyIUi.jpg" crossorigin="anonymous" />
+            <img src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" id="grid" crossorigin="anonymous" />
+            <img src="https://img.gs/bbdkhfbzkk/2048x1024,stretch/http://i.imgur.com/WMNH2OF.jpg" id="chrome" crossorigin="anonymous" />
+            <img id="sky" src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg" crossorigin="anonymous" />
+        </a-assets>
+            
+        <!--Hintergrund-->
+        <a-entity geometry="primitive:plane;width:10000;height:10000" rotation="-90 0 0" material="src:#grid;repeat:10000 10000;transparent:true;metalness:0.6;roughness:0.4;sphericalEnvMap:#sky" position="0 -1.23 0" scale="1 1 1" visible="true"></a-entity>
+        <a-entity light="color:#ccccff;intensity:1;type:ambient" visible="true" position="0 0 0" rotation="0 0 0" scale="1 1 1"></a-entity>
+        <a-entity light="color:ffaaff;intensity:1.5" position="5 5 5" rotation="0 0 0" scale="1 1 1" visible="true"></a-entity>
+        <a-entity light="color:white;intensity:0.5" position="-5 5 15" rotation="0 0 0" scale="1 1 1" visible=""></a-entity>
+        <a-entity light="color:white;type:ambient" position="0 0.036 0" rotation="0 0 0" scale="1 1 1" visible="true"></a-entity>
+        <a-sky src="#sky" rotation="0 -90 0" position="-0 -0.018 -0" scale="-1 1 1" visible="true" material="color:#FFF;shader:flat;src:#sky" geometry="primitive:sphere;radius:5000;segmentsWidth:64;segmentsHeight:20"></a-sky>
+
+        <!--Kamera-->
+        <a-entity id="rig" position="6 19 15" rotation="-30 15 0">
+            <a-entity camera look-controls wasd-controls twoway-motion="speed: 250">
+                <a-camera position="3 -1 4" rotation="0 -1 0" >
+                  <a-cursor cursor="fuse: true; fuseTimeout: 500"
+                            position="0 0 -1"
+                            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                            material="color: white; shader: flat"></a-cursor>
+                </a-camera>
+            </a-entity>
+        </a-entity>
+    </a-scene>
+    
+</body>
+</html>

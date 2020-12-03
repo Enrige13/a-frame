@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>2D Bubble Chart Visualization</title>
+                
+        <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>    
+
+    </head>
+    <body>
+
+        <a-scene>
+            <a-image src="https://cdn.glitch.com/b592e527-d2dc-4281-9d52-6fe813ec578e%2Fchart.PNG?v=1593632069605" height="20" width="25" position="7.5 12 -4" rotation="0 0 0"></a-image>
+              
+          <!--links-->
+            <a-image src="https://cdn.glitch.com/b592e527-d2dc-4281-9d52-6fe813ec578e%2Fshanghai.jpg?v=1593633890662" height="3" width="5" position="-7 18 0" rotation="0 90 0"></a-image>
+            <a-image src="https://cdn.glitch.com/b592e527-d2dc-4281-9d52-6fe813ec578e%2Fpeking.jpg?v=1593633880123" height="3" width="5" position="-7 14 0" rotation="0 90 0"></a-image>
+            <a-image src="https://cdn.glitch.com/b592e527-d2dc-4281-9d52-6fe813ec578e%2Fguangzhow.jpg?v=1593633848139" height="3" width="5" position="-7 10 0" rotation="0 90 0"></a-image>
+            <a-image src="https://cdn.glitch.com/b592e527-d2dc-4281-9d52-6fe813ec578e%2Flondon.jpg?v=1593633852752" height="3" width="5" position="-7 6 0" rotation="0 90 0"></a-image>
+          
+          <!--mitte-->
+            <a-image src="https://cdn.glitch.com/b592e527-d2dc-4281-9d52-6fe813ec578e%2Fshanghai.jpg?v=1593633890662" height="3" width="5" position="2 2 -3" rotation="0 0 0"></a-image>
+            <a-image src="https://cdn.glitch.com/b592e527-d2dc-4281-9d52-6fe813ec578e%2Fpeking.jpg?v=1593633880123" height="3" width="5" position="8 2 -3" rotation="0 0 0"></a-image>
+            <a-image src="https://cdn.glitch.com/b592e527-d2dc-4281-9d52-6fe813ec578e%2Fguangzhow.jpg?v=1593633848139" height="3" width="5" position="14 2 -3" rotation="0 0 0"></a-image>
+          
+          <!--rechts-->
+            <a-image src="https://cdn.glitch.com/b592e527-d2dc-4281-9d52-6fe813ec578e%2Fnewyorkcity.jpg?v=1593633869244" height="3" width="5" position="22 18 0" rotation="0 -90 0"></a-image>
+            <a-image src="https://cdn.glitch.com/b592e527-d2dc-4281-9d52-6fe813ec578e%2Fseoul.jpg?v=1593633886136" height="3" width="5" position="22 14 0" rotation="0 -90 0"></a-image>
+            <a-image src="https://cdn.glitch.com/b592e527-d2dc-4281-9d52-6fe813ec578e%2Fmoskau.jpg?v=1593633862782" height="3" width="5" position="22 10 0" rotation="0 -90 0"></a-image>
+            <a-image src="https://cdn.glitch.com/b592e527-d2dc-4281-9d52-6fe813ec578e%2Fdelhi.jpg?v=1593633842513" height="3" width="5" position="22 6 0" rotation="0 -90 0"></a-image>
+          
+            <a-assets>
+                <img id="pink" src="https://img.gs/bbdkhfbzkk/stretch/http://i.imgur.com/1hyyIUi.jpg" crossorigin="anonymous" />
+                <img src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" id="grid" crossorigin="anonymous" />
+                <img src="https://img.gs/bbdkhfbzkk/2048x1024,stretch/http://i.imgur.com/WMNH2OF.jpg" id="chrome" crossorigin="anonymous" />
+                <img id="sky" src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg" crossorigin="anonymous" />
+            </a-assets>
+                
+            <!--Hintergrund-->
+            <a-entity geometry="primitive:plane;width:10000;height:10000" rotation="-90 0 0" material="src:#grid;repeat:10000 10000;transparent:true;metalness:0.6;roughness:0.4;sphericalEnvMap:#sky" position="0 0.23 0" scale="1 1 1" visible="true"></a-entity>
+            <a-entity light="color:#ccccff;intensity:1;type:ambient" visible="true" position="0 0 0" rotation="0 0 0" scale="1 1 1"></a-entity>
+            <a-entity light="color:ffaaff;intensity:1.5" position="5 5 5" rotation="0 0 0" scale="1 1 1" visible="true"></a-entity>
+            <a-entity light="color:white;intensity:0.5" position="-5 5 15" rotation="0 0 0" scale="1 1 1" visible=""></a-entity>
+            <a-entity light="color:white;type:ambient" position="0 0.036 0" rotation="0 0 0" scale="1 1 1" visible="true"></a-entity>
+            <a-sky src="#sky" rotation="0 -90 0" position="0 -0.018 0" scale="-1 1 1" visible="true" material="color:#FFF;shader:flat;src:#sky" geometry="primitive:sphere;radius:5000;segmentsWidth:64;segmentsHeight:20"></a-sky>
+    
+            <!--Kamera Position + Kreis als Mauszeiger-->
+            <a-entity position="8 10 10" rotation="0 0 0">
+                <a-entity camera look-controls wasd-controls>
+                <a-entity cursor="fuse: true; fuseTimeout: 500"
+                        position="0 0 -2"
+                        geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                        material="color: white; shader: flat">
+                </a-entity>
+                </a-entity>
+            </a-entity>
+        </a-scene>
+
+        <!--<div id="textstyle" style="width: 1250px; height: 850px;"></div>-->
+    </body>
+
+    <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load("current", {packages:["corechart"]});
+          google.charts.setOnLoadCallback(drawChart);
+      
+          function drawChart() {
+      
+            var data = google.visualization.arrayToDataTable([
+              ['ID', 'Nummer der Stationen', 'Länge des Systems', 'Region', 'Kunden'],
+              ['Tokyo', 195.1, 142, 'Asien',  6840000],
+              ['Mexico City', 162, 200.9, 'Amerika', 4530000],
+              ['Delhi', 229, 347.6, 'Asien', 4700000],
+              ['Moskau', 238, 408.1, 'Asien', 2500000],
+              ['Guangzhow', 266, 514.8, 'Asien', 8200000],
+              ['London', 270, 402, 'Europa', 5000000],
+              ['Paris', 302, 214, 'Europa', 4160000],
+              ['Peking', 326, 690.5, 'Asien', 13750000],
+              ['Seoul', 331, 353.2, 'Asien', 6950000],
+              ['Shanghai', 345, 676, 'Asien', 10160000],
+              ['New York City', 424, 380.2, 'Amerika', 5500000]
+            ]);
+      
+            var options = {
+              title: 'U-Bahn Systeme der Welt',
+              hAxis: {title: 'Nummer der Stationen'},
+              vAxis: {title: 'Länge des U-Bahn-Systems'},
+              bubble: {
+                textStyle: {
+                  fontSize: 12,
+                  fontName: 'Times-Roman',
+                  color: 'green',
+                  bold: true
+                }
+              }
+            };
+      
+            var chart = new google.visualization.BubbleChart(document.getElementById('textstyle'));
+      
+            chart.draw(data, options);
+          }
+        </script>-->
+      </body>
+</html>

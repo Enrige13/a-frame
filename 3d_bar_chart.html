@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Bar Chart</title>
+
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  </head>
+<body>
+
+    <a-scene> 
+      <!--Assets für den Hintergrund-->
+      <a-assets>
+        <img id="pink" src="https://img.gs/bbdkhfbzkk/stretch/http://i.imgur.com/1hyyIUi.jpg" crossorigin="anonymous" />
+        <img src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png" id="grid" crossorigin="anonymous" />
+        <img src="https://img.gs/bbdkhfbzkk/2048x1024,stretch/http://i.imgur.com/WMNH2OF.jpg" id="chrome" crossorigin="anonymous" />
+        <img id="sky" src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg" crossorigin="anonymous" />
+      </a-assets>
+          
+      <!--Hintergrund-->
+      <a-entity geometry="primitive:plane;width:10000;height:10000" rotation="-90 0 0" material="src:#grid;repeat:10000 10000;transparent:true;metalness:0.6;roughness:0.4;sphericalEnvMap:#sky" position="0 -1.23 0" scale="1 1 1" visible="true"></a-entity>
+      <a-entity light="color:#ccccff;intensity:1;type:ambient" visible="true" position="0 0 0" rotation="0 0 0" scale="1 1 1"></a-entity>
+      <a-entity light="color:ffaaff;intensity:1.5" position="5 5 5" rotation="0 0 0" scale="1 1 1" visible="true"></a-entity>
+      <a-entity light="color:white;intensity:0.5" position="-5 5 15" rotation="0 0 0" scale="1 1 1" visible=""></a-entity>
+      <a-entity light="color:white;type:ambient" position="0 0.036 0" rotation="0 0 0" scale="1 1 1" visible="true"></a-entity>
+      <a-sky src="#sky" rotation="0 -90 0" position="-0 -0.018 -0" scale="-1 1 1" visible="true" material="color:#FFF;shader:flat;src:#sky" geometry="primitive:sphere;radius:5000;segmentsWidth:64;segmentsHeight:20"></a-sky>
+
+      <a-entity position="8 4 10" rotation="0 0 0">
+        <a-entity camera look-controls wasd-controls>
+          <a-entity cursor="fuse: true; fuseTimeout: 500"
+                  position="0 0 -2"
+                  geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                  material="color: white; shader: flat">
+          </a-entity>
+      	</a-entity>
+      </a-entity>
+    </a-scene>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <script>
+          // default alpha for bars
+    var alpha = 1;
+    
+    // data
+    let data = [ 11.1, 7.6, 21.9, 6.5, 7.2, 20.3, 8.9,
+                 14.7, 5.5, 20.3, 28.6, 8.5, 16.9, 16, 9.5 ]
+
+    let countries = [ 'Australien', 'China', 'Hong Kong', 'Indien',
+                    'Indonesien', 'Japan', 'Malaysia', 'Neu Seeland',
+                    'Philippinen', 'Singapur', 'Südkorea', 'Sri Lanka',
+                    'Taiwan', 'Thailand', 'Vietnam' ]
+
+    // we scale the height of our bars using d3's linear scale (y)
+    let hscale = d3.scale.linear()
+        .domain([0, d3.max(data)])
+        .range([0, 3])
+
+    // we select the scene object just like an svg
+    let scene = d3.select("a-scene")
+
+    // we use d3's enter/update/exit pattern to draw and bind our dom elements
+    let bars = scene.selectAll("a-box.bar")
+    .data(data)
+    .enter()
+    .append("a-box")
+    .classed("bar", true);
+    
+    // we set attributes on our cubes to determine how they are rendered
+    bars.attr({
+    position: function(d,i) {
+        var x =  i * 1
+        var y = hscale(d)/2;
+        var z = 1
+        return x + " " + y + " " + z
+    },
+    width: function(d) { return 0.5},
+    depth: function(d) { return 1},
+    height: function(d) { return hscale(d)},
+    opacity: alpha,
+    color: ("fill", function(d) {
+          return "rgb(0, " + (d * 30) + ", " + (d * 10) + ")";
+      //return "rgb(0,0, " + (d * 10) + ")";   
+        })
+    })
+    .on("mouseenter", function(d,i) {
+    // this event gets fired continuously as long as the cursor
+    // is over the element. we only want trigger our animation the first time
+    if(this.hovering) return;
+    //console.log("hover", i,d)
+    this.hovering = true;
+    d3.select(this).transition().duration(10)
+    .attr({
+        metalness: 0.6,
+        opacity: .9
+    })
+    })
+    .on("mouseleave", function(d,i) {
+    //console.log("leave",i,d)
+    this.hovering = false;
+    d3.select(this).transition().duration(500)
+        .attr({
+            metalness: 0,
+            opacity: alpha
+        });
+    });
+
+    //Array numbers
+    let numb = scene.selectAll('a-text .desc')
+        .data(data)
+        .enter()
+        .append('a-text')
+        .text(function(d){
+            return d.data;
+        })
+        .attr({
+            position : function(d,i) {
+                var x =  i 
+                var y = hscale(d) + 0.5
+                var z = 1.5
+                return x + " " + y + " " + z
+            },
+            value: function(d,i){return data[i]},
+            color: '#ffffff',
+            align: 'center',
+            width: 8,
+        })
+        .classed('desc', true);
+
+    //Array countries
+    let count = scene.selectAll('a-text .num')
+        .data(countries)
+        .enter()
+        .append('a-text')      
+        .text(function(d){
+            return d.countries;
+        })
+        .attr({
+        position : function(d,i) {
+            var x =  i
+            var y = -0.35
+            var z = 1.5
+            return x + " " + y + " " + z
+        },
+        value: function(d,i){return countries[i]},
+        color: '#ffffff',
+        align: 'center',
+        baseline: 'top',
+        width: 4,
+        })
+        .classed('num', true);
+
+    scene.append('a-text')
+        .attr({
+            position: '5 5 0',
+            value: 'Average Internet Speeds in Asia',
+            color: '#ffffff',
+            align: 'center',
+            width: 15,
+        })
+    
+    </script>
+  </body>
+</html>

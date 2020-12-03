@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grundlayout der Szene</title>
+    
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  </head>
+<body>
+
+  <a-scene>
+    <a-assets>
+      <img id="grid" src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png"/>
+      <img id="sky" src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg"/>
+    </a-assets>
+
+    <!-- Boden -->
+    <a-entity geometry="primitive:plane;width:10000;height:10000" rotation="-90 0 0" material="src:#grid;repeat:10000 10000;transparent:true;metalness:0.6;roughness:0.4;sphericalEnvMap:#sky" position="0 -1.23 0" scale="1 1 1" visible="true"></a-entity>
+    <!-- Bodenstyle in der Ferne -->
+    <a-entity light="color:#ccccff;intensity:1;type:ambient" visible="true" position="0 0 0" rotation="0 0 0" scale="1 1 1"></a-entity>
+    <!-- Bodenstyle in der Ferne 2 -->
+    <a-entity light="color:#ffaaff;intensity:1.5" position="5 5 5" rotation="0 0 0" scale="1 1 1" visible="true"></a-entity>
+    <!-- Bodenstyle in der Ferne 3 -->
+    <a-entity light="color:white;intensity:0.5" position="-5 5 15" rotation="0 0 0" scale="1 1 1" visible=""></a-entity>
+    <!-- Bodenstyle in der Ferne 4 -->
+    <a-entity light="color:white;type:ambient" position="0 0.036 0" rotation="0 0 0" scale="1 1 1" visible="true"></a-entity>
+    <!-- Background-->
+    <a-sky src="#sky" rotation="0 -90 0" position="-0 -0.018 -0" scale="-1 1 1" visible="true" material="color:#FFF;shader:flat;src:#sky" geometry="primitive:sphere;radius:5000;segmentsWidth:64;segmentsHeight:20"></a-sky>
+    
+    <!-- Kamera - Position + Controlls -->
+    <a-entity position="8 4 10" rotation="0 0 0">
+      <a-entity camera look-controls wasd-controls>
+        <a-entity cursor="fuse: true; fuseTimeout: 500"
+                position="0 0 -2"
+                geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                material="color: white; shader: flat">
+        </a-entity>
+      </a-entity>
+    </a-entity>
+  </a-scene>
+</body>
+</html>
